@@ -1,6 +1,6 @@
 ## HTTP REST
-> * order: �ײ�������񣬶����ṩhttp�ӿ�
-> * order_bff: �ۺϷ���(�ü����ۺϵײ����)�������ṩhttp�ӿ�
+> * order: 底层基础服务，对外提供http接口
+> * order_bff: 聚合服务(裁剪、聚合底层服务)，对外提供http接口
 
 #### 1.Run the order service
 ```
