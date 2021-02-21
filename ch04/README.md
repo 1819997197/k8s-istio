@@ -44,11 +44,22 @@ $ curl 10.105.143.236:8080/test
 hello world!
 ```
 
-#### kubectl 常用命令总结
-```mermaid
-graph LR
-A[Hard edge] -->B(Round edge)
-    B --> C{Decision}
-    C -->|One| D[Result one]
-    C -->|Two| E[Result two]
+#### 4.kubectl 常用命令总结
+```
+1)申明式资源管理
+**apply**
+
+2)命令式资源管理
+创建: **create**
+更新: **scale**
+删除: **delete**
+
+3)资源查看
+**get、describe**
+
+4)容器管理
+**log、exec、cp**
+
+5)集群管理
+**cluster-info、version**
 ​```
