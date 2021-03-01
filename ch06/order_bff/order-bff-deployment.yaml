@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-bff-deployment
+spec:
+  selector:
+    matchLabels:
+      app: order-bff-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: order-bff-deployment
+    spec:
+      containers:
+      - name: order-bff-deployment
+        image: order-bff-server:0.2
+        ports:
+        - containerPort: 8080
+
