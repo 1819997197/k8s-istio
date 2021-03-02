@@ -9,3 +9,5 @@
 #### ch04: 服务 + docker + k8s
 
 #### ch05: istio安装与使用
+
+#### ch06: 服务 + k8s + istio(网关)
