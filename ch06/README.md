@@ -25,7 +25,12 @@ $ kubectl apply -f order-bff-deployment.yaml
 $ kubectl apply -f order-bff-svc.yaml
 ```
 
-#### 3.Test the server
+#### 3.Run the gateway
+```
+$ kubectl apply -f order-gateway.yaml
+```
+
+#### 4.Test the server
 ```
 1)查看服务运行状态
 $ kubectl get pods
@@ -35,31 +40,25 @@ order-deployment-6d7d9b64cd-lvdc8       1/1     Running   1          35m
 
 $ kubectl get svc
 NAME           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
-kubernetes     ClusterIP   10.96.0.1        <none>        443/TCP     4d17h
-order-bff-f1   ClusterIP   10.105.143.236   <none>        8080/TCP    14m
-order-svc      ClusterIP   10.96.78.144     <none>        50050/TCP   32m
+NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
+kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP     165d
+order-bff-svc   ClusterIP   10.108.147.101   <none>        8080/TCP    26m
+order-svc       ClusterIP   10.108.168.120   <none>        50050/TCP   35m
+
+$ kubectl get gateway
+NAME            AGE
+order-gateway   12s
+$ kubectl get virtualservice
+NAME           GATEWAYS          HOSTS   AGE
+order-bff-vs   [order-gateway]   [*]     20s
 
 2)验证服务是否可用
-$ curl 10.105.143.236:8080/test
+// 集群内部访问
+$ curl 10.108.147.101:8080/test
 hello world!
+
+// 集群外部访问(使用服务的node port访问网关)
+$ export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+$ export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
+// 打开浏览器访问 http://$INGRESS_HOST:$INGRESS_PORT/test 即可(或者curl访问)
 ```
-
-#### 4.kubectl 常用命令总结
-```
-1)申明式资源管理
-**apply**
-
-2)命令式资源管理
-创建: **create**
-更新: **scale**
-删除: **delete**
-
-3)资源查看
-**get、describe**
-
-4)容器管理
-**log、exec、cp**
-
-5)集群管理
-**cluster-info、version**
-​```
