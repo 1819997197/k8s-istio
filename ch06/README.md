@@ -62,3 +62,12 @@ $ export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway
 $ export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
 // 打开浏览器访问 http://$INGRESS_HOST:$INGRESS_PORT/test 即可(或者curl访问)
 ```
+
+#### 5.清除
+```
+$ kubectl delete -f order-gateway.yaml
+$ kubectl delete -f order/order-svc.yaml
+$ kubectl delete -f order/order-deployment.yaml
+$ kubectl delete -f order_bff/order-bff-svc.yaml
+$ kubectl delete -f order_bff/order-bff-deployment.yaml
+```
